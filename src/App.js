@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import styled from "styled-components";
+import { MainPage } from './pages/MainPage';
+import ForDestruction from './pages/ForDestruction';
+import { AsteroidDetailWrap } from './pages/AsteroidDetail';
 
-function App() {
+const StyledContainer = styled.div`
+display: flex;
+justify-content: center;
+`
+
+const StyledMainPage = styled.div`
+width: 952px;
+height: 200px;
+padding: 37px 16px 46px 16px;
+@media ${({ theme }) => theme.media.phone} {
+   width: 100%;
+   padding-top: 8px;
+   }
+`
+
+function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StyledContainer>
+      <StyledMainPage props={props}>
+        <BrowserRouter>
+          <Switch>
+            <Route path='/asteroid-detail/:id' component={AsteroidDetailWrap} />
+            <Route path='/for-destruction' component={ForDestruction} />
+            <Route path='/' component={MainPage} />
+          </Switch>
+        </BrowserRouter>
+      </StyledMainPage>
+    </StyledContainer>
   );
 }
 
