@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-   StyleNearEarthApproach
-} from './StyledComponents';
+import { StyledNearEarthApproach } from './styles';
 
 export class NearEarthApproach extends React.Component {
 
@@ -62,7 +60,7 @@ export class NearEarthApproach extends React.Component {
 
       return (
          <React.Fragment>
-            <StyleNearEarthApproach>{date} этот астероид {timeForm} вокруг {planet} со скоростью {speed}, на расстоянии {distance} от Земли</StyleNearEarthApproach>
+            <StyledNearEarthApproach>{date} этот астероид {timeForm} вокруг {planet} со скоростью {speed}, на расстоянии {distance} от Земли</StyledNearEarthApproach>
          </React.Fragment>
       )
    }

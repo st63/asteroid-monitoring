@@ -1,24 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import styled from "styled-components";
-import { MainPage } from './pages/MainPage';
-import ForDestruction from './pages/ForDestruction';
-import { AsteroidDetailWrap } from './pages/AsteroidDetail';
-
-const StyledContainer = styled.div`
-display: flex;
-justify-content: center;
-`
-
-const StyledMainPage = styled.div`
-width: 952px;
-height: 200px;
-padding: 37px 16px 46px 16px;
-@media ${({ theme }) => theme.media.phone} {
-   width: 100%;
-   padding-top: 8px;
-   }
-`
+import { MainPage } from './pages/MainPage/index';
+import ForDestruction from './pages/ForDestruction/index';
+import { AsteroidDetailWrap } from './pages/AsteroidDetail/index';
+import { StyledContainer, StyledMainPage } from './styles';
 
 function App(props) {
   return (

@@ -1,10 +1,10 @@
 import React from 'react';
-import tiranozavrImg from '../images/tiranozavrImg.png';
-import { pushAsteroidToDestroyAC } from '../redux/actions';
+import tiranozavrImg from '../../images/tiranozavrImg.png';
+import { pushAsteroidToDestroyAC } from '../../redux/actions';
 import { connect } from "react-redux";
-import {
-   StyledAsteroid, StyledTiranozavrImg, StyledAsteroidInfo, StyledAsteroidEstimation, StyledButton, StyledAsteroidName, StyledAsteroidParam, StyledSpan, StyledDotted,
-} from './StyledComponents';
+import { Button } from '../../styles';
+import { Asteroid, AsteroidName } from '../../pages/styles';
+import { TiranozavrImg, AsteroidInfo, AsteroidEstimation, AsteroidParam, Span, Dotted } from './styles';
 
 class AsteroidElement extends React.Component {
    dateConvert(date) {
@@ -29,9 +29,7 @@ class AsteroidElement extends React.Component {
          props = this.props.location.propsSearch;
       }
       const { id, name, close_approach_data, estimated_diameter, is_potentially_hazardous_asteroid, hazardFilter, distanceInKilometers, minAsteroid, stepMeters } = props;
-      if (hazardFilter && !is_potentially_hazardous_asteroid) {
-         return null;
-      }
+
       let customName = name.replace('(', '').replace(')', '')
       const hazardousColor = is_potentially_hazardous_asteroid ? 'linear-gradient(90deg, #FFB199 0%, #FF0844 100%)' : 'linear-gradient(90deg, #CFF37D 0%, #7DE88C 100%)';
       const hazardousTitle = is_potentially_hazardous_asteroid ? 'опасен' : 'не опасен';
@@ -62,21 +60,21 @@ class AsteroidElement extends React.Component {
       }
 
       return (
-         <StyledAsteroid background={hazardousColor} asteroidImageSize={asteroidImageSize} asteroidImagePositionY={asteroidImagePositionY}>
-            <StyledTiranozavrImg src={tiranozavrImg} />
-            <StyledAsteroidInfo align={'center'} marginTop={'50px'} padding={padding}>
-               <StyledAsteroidEstimation>
+         <Asteroid background={hazardousColor} asteroidImageSize={asteroidImageSize} asteroidImagePositionY={asteroidImagePositionY}>
+            <TiranozavrImg src={tiranozavrImg} />
+            <AsteroidInfo align={'center'} marginTop={'50px'} padding={padding}>
+               <AsteroidEstimation>
                   Оценка:
-               </StyledAsteroidEstimation>
-               <StyledAsteroidEstimation weight={'bold'}>
+               </AsteroidEstimation>
+               <AsteroidEstimation weight={'bold'}>
                   {hazardousTitle}
-               </StyledAsteroidEstimation>
-               <StyledButton onClick={this.pushAsteroidToDestroy} buttonShow={buttonShow}>
+               </AsteroidEstimation>
+               <Button onClick={this.pushAsteroidToDestroy} buttonShow={buttonShow}>
                   На уничтожение
-               </StyledButton>
-            </StyledAsteroidInfo>
-            <StyledAsteroidInfo width={'290px'}>
-               <StyledAsteroidName marginBottom={this.props.marginBottom} to={{
+               </Button>
+            </AsteroidInfo>
+            <AsteroidInfo width={'290px'}>
+               <AsteroidName marginBottom={this.props.marginBottom} to={{
                   pathname: `/asteroid-detail/${id}`,
                   propsSearch: {
                      id: id,
@@ -85,18 +83,18 @@ class AsteroidElement extends React.Component {
                   }
                }}>
                   {customName}
-               </StyledAsteroidName>
-               <StyledAsteroidParam><StyledSpan>Дата</StyledSpan><StyledDotted></StyledDotted><StyledSpan>
+               </AsteroidName>
+               <AsteroidParam><Span>Дата</Span><Dotted></Dotted><Span>
                   {currentDate}
-               </StyledSpan></StyledAsteroidParam>
-               <StyledAsteroidParam><StyledSpan>Расстояние</StyledSpan><StyledDotted></StyledDotted><StyledSpan>
+               </Span></AsteroidParam>
+               <AsteroidParam><Span>Расстояние</Span><Dotted></Dotted><Span>
                   {distance}
-               </StyledSpan></StyledAsteroidParam>
-               <StyledAsteroidParam><StyledSpan>Размер</StyledSpan><StyledDotted></StyledDotted><StyledSpan>
+               </Span></AsteroidParam>
+               <AsteroidParam><Span>Размер</Span><Dotted></Dotted><Span>
                   {diameter} м
-               </StyledSpan></StyledAsteroidParam>
-            </StyledAsteroidInfo>
-         </StyledAsteroid>
+               </Span></AsteroidParam>
+            </AsteroidInfo>
+         </Asteroid>
       )
    }
 }

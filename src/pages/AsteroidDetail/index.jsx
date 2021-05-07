@@ -1,10 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { NearEarthApproach } from '../components/NearEarthApproach';
-import AsteroidElement from '../components/AsteroidElement';
-import {
-   StyledSectionWrapper, StyledWrapperTitles, StyledTitle, StyledSorting, StyledSubTitle, StyledSortingWarning, StyledAsteroidNameTitle
-} from '../components/StyledComponents';
+import { NearEarthApproach } from '../../components/NearEarthApproach';
+import AsteroidElement from '../../components/AsteroidElement';
+import { SectionWrapper, Title, Sorting, SubTitle, SortingWarning, AsteroidNameTitle } from '../styles';
 
 class AsteroidDetail extends React.Component {
    state = {
@@ -33,28 +31,28 @@ class AsteroidDetail extends React.Component {
 
       return (
          <React.Fragment>
-            <StyledSectionWrapper props={this.props} marginBottom={'26px'} border={'1px solid black'}>
-               <StyledWrapperTitles>
-                  <StyledTitle props={this.props}>
+            <SectionWrapper props={this.props} marginBottom={'26px'} border={'1px solid black'}>
+               <div>
+                  <Title props={this.props}>
                      ARMAGGEDON V
-                  </StyledTitle>
-                  <StyledSubTitle>
+                  </Title>
+                  <SubTitle>
                      Подробные данные об астероиде
-                  </StyledSubTitle>
-               </StyledWrapperTitles>
-               <StyledSorting props={this.props} paddingTop={'14px'}>
-                  <StyledAsteroidNameTitle>
+                  </SubTitle>
+               </div>
+               <Sorting props={this.props} paddingTop={'14px'}>
+                  <AsteroidNameTitle>
                      {this.props.location.propsSearch.customName}
-                  </StyledAsteroidNameTitle>
-                  <StyledSortingWarning to='/' underline={'underline'}>
+                  </AsteroidNameTitle>
+                  <SortingWarning to='/' underline={'underline'}>
                      Все астероиды
-                  </StyledSortingWarning>
-               </StyledSorting>
-            </StyledSectionWrapper>
+                  </SortingWarning>
+               </Sorting>
+            </SectionWrapper>
             <AsteroidElement {...this.props} />
-            <StyledSubTitle>
+            <SubTitle>
                Сближения этого астероида за все время:
-            </StyledSubTitle>
+            </SubTitle>
             {allApproach}
          </React.Fragment>
       )

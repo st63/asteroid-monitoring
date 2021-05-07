@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from "react-redux";
-import AsteroidElement from '../components/AsteroidElement';
-import {
-   StyledSectionWrapper, StyledWrapperTitles, StyledTitle, StyledSorting, StyledSubTitle, StyledButton, StyledSortingWarning, StyledAsteroidNameTitle
-} from '../components/StyledComponents';
+import AsteroidElement from '../../components/AsteroidElement';
+import { SectionWrapper, Title, Sorting, SubTitle, SortingWarning, AsteroidNameTitle } from '../styles';
+import { Button } from '../../styles';
 
 class ForDestruction extends React.Component {
    render() {
@@ -16,29 +15,29 @@ class ForDestruction extends React.Component {
       const asteroidsToDestroy = this.props.asteroidsToDestroy.map(asteroid => <AsteroidElement marginBottom={'70px'} buttonShow={'none'} padding={'25px'} key={asteroid.id} {...asteroid} />)
       return (
          <React.Fragment>
-            <StyledSectionWrapper props={this.props} marginBottom={'26px'} border={'1px solid black'}>
-               <StyledWrapperTitles>
-                  <StyledTitle props={this.props}>
+            <SectionWrapper props={this.props} marginBottom={'26px'} border={'1px solid black'}>
+               <div>
+                  <Title props={this.props}>
                      ARMAGGEDON V
-                  </StyledTitle>
-                  <StyledSubTitle>
+                  </Title>
+                  <SubTitle>
                      Здесь вы можете отправить Брюса Уилиса и его команду на уничтожение астероидов
-                  </StyledSubTitle>
-               </StyledWrapperTitles>
-               <StyledSorting props={this.props} paddingTop={'14px'}>
-                  <StyledAsteroidNameTitle>
+                  </SubTitle>
+               </div>
+               <Sorting props={this.props} paddingTop={'14px'}>
+                  <AsteroidNameTitle>
                      Корзина уничтожения
-                  </StyledAsteroidNameTitle>
-                  <StyledSortingWarning to='/' underline={'underline'}>
+                  </AsteroidNameTitle>
+                  <SortingWarning to='/' underline={'underline'}>
                      Все астероиды
-                  </StyledSortingWarning>
-               </StyledSorting>
-            </StyledSectionWrapper>
+                  </SortingWarning>
+               </Sorting>
+            </SectionWrapper>
             {emptyCart}
             {asteroidsToDestroy}
-            <StyledButton marginBottom={'30px'} buttonShow={buttonShow}>
+            <Button marginBottom={'30px'} buttonShow={buttonShow}>
                Вызов Брюса Уилиса
-            </StyledButton>
+            </Button>
          </React.Fragment>
       )
    }

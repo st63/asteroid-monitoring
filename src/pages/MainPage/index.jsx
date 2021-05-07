@@ -1,15 +1,14 @@
 import React from 'react';
-import AsteroidElement from '../components/AsteroidElement';
+import AsteroidElement from '../../components/AsteroidElement';
 import InfiniteScroll from "react-infinite-scroll-component";
-import {
-   StyledSectionWrapper, StyledWrapperTitles, StyledTitle, StyledSorting, StyledSubTitle, StyledSortingCheckbox,
-   StyledInput, StyledInputTitle, StyledSortingWarning, StyledFooter, StyledSortingDistanceKm, StyledSortingDistanceMoon
-} from '../components/StyledComponents';
+import { SectionWrapper, Title, Sorting, SubTitle, SortingWarning } from '../styles';
+import { SortingCheckbox, Input, Footer, SortingDistanceKm, SortingDistanceMoon } from './styles';
 
 export class MainPage extends React.Component {
    state = {
       allAsteroids: [],
       asteroidsToDisplay: [],
+      onlyDangerousAsteroids: [],
       distanceInKilometers: true,
       distanceIndistanceToTheMoon: false,
       hazardFilter: false,
@@ -32,6 +31,7 @@ export class MainPage extends React.Component {
          let allAsteroidsObject = data.near_earth_objects;
          const allAsteroidsCountKeys = Object.keys(allAsteroidsObject);
          let allAsteroidsArray = [];
+         let onlyDangerousAsteroids = [];
 
          for (let i = 0; i < allAsteroidsCountKeys.length; i++) {
             let nextDay = new Date();
@@ -49,7 +49,13 @@ export class MainPage extends React.Component {
             }
 
             allAsteroidsObject[`${year}-${month}-${day}`].map(asteroid => {
+
                allAsteroidsArray.push(asteroid)
+
+               if (asteroid.is_potentially_hazardous_asteroid) {
+                  onlyDangerousAsteroids.push(asteroid)
+               }
+
             })
          }
 
@@ -61,6 +67,7 @@ export class MainPage extends React.Component {
          this.setState({
             allAsteroids: allAsteroidsArray,
             asteroidsToDisplay: asteroidsToDisplay,
+            onlyDangerousAsteroids,
          })
       } catch (err) {
          alert('Извините, сервер не справляется, очень много запросов');
@@ -121,44 +128,46 @@ export class MainPage extends React.Component {
          underlineDistanceMoon = 'none';
       }
 
+      let currentArray = !this.state.hazardFilter ? this.state.asteroidsToDisplay : this.state.onlyDangerousAsteroids;
+
       return (
          <>
-            <StyledSectionWrapper props={this.props} marginBottom={'26px'} border={'1px solid black'}>
-               <StyledWrapperTitles>
-                  <StyledTitle props={this.props}>
+            <SectionWrapper props={this.props} marginBottom={'26px'} border={'1px solid black'}>
+               <div>
+                  <Title props={this.props}>
                      ARMAGGEDON V
-                  </StyledTitle>
-                  <StyledSubTitle>
+                  </Title>
+                  <SubTitle>
                      Сервис мониторинга и уничтожения астероидов, опасно подлетающих к Земле.
-                  </StyledSubTitle>
-               </StyledWrapperTitles>
-               <StyledSorting props={this.props} paddingTop={'14px'}>
-                  <StyledSortingWarning to='/' weight={'bold'}>
+                  </SubTitle>
+               </div>
+               <Sorting props={this.props} paddingTop={'14px'}>
+                  <SortingWarning to='/' weight={'bold'}>
                      Астероиды
-                  </StyledSortingWarning>
-                  <StyledSortingWarning to='/for-destruction' margin={'24px'} underline={'underline'}>
+                  </SortingWarning>
+                  <SortingWarning to='/for-destruction' margin={'24px'} underline={'underline'}>
                      Уничтожение
-                  </StyledSortingWarning>
-               </StyledSorting>
-            </StyledSectionWrapper>
-            <StyledSectionWrapper marginBottom={'24px'}>
-               <StyledSortingCheckbox>
-                  <StyledInput onClick={this.toggleHazardFilter} />
-                  <StyledInputTitle>
+                  </SortingWarning>
+               </Sorting>
+            </SectionWrapper>
+            <SectionWrapper marginBottom={'24px'}>
+               <SortingCheckbox>
+                  <Input onClick={this.toggleHazardFilter} />
+                  <span>
                      Показать только опасные
-                  </StyledInputTitle>
-               </StyledSortingCheckbox>
-               <StyledSorting margin={'6px'}>
-                  Расстояние <StyledSortingDistanceKm weightDistanceKm={weightDistanceKm} underlineDistanceKm={underlineDistanceKm} onClick={() => this.changeDistanceSorting(true)}>в километрах</StyledSortingDistanceKm>, <StyledSortingDistanceMoon weightDistanceMoon={weightDistanceMoon} underlineDistanceMoon={underlineDistanceMoon} onClick={() => this.changeDistanceSorting(false)}>в дистанциях до луны</StyledSortingDistanceMoon>
-               </StyledSorting>
-            </StyledSectionWrapper>
+                  </span>
+               </SortingCheckbox>
+               <Sorting margin={'6px'}>
+                  Расстояние <SortingDistanceKm weightDistanceKm={weightDistanceKm} underlineDistanceKm={underlineDistanceKm} onClick={() => this.changeDistanceSorting(true)}>в километрах</SortingDistanceKm>, <SortingDistanceMoon weightDistanceMoon={weightDistanceMoon} underlineDistanceMoon={underlineDistanceMoon} onClick={() => this.changeDistanceSorting(false)}>в дистанциях до луны</SortingDistanceMoon>
+               </Sorting>
+            </SectionWrapper>
             <InfiniteScroll
                dataLength={this.state.asteroidsToDisplay.length}
                next={this.loadMore}
                hasMore={this.state.hasMore}
             >
                {
-                  this.state.asteroidsToDisplay.map(asteroid => <AsteroidElement
+                  currentArray.map(asteroid => <AsteroidElement
                      key={asteroid.id}
                      {...asteroid}
                      minAsteroid={minAsteroid}
@@ -167,9 +176,9 @@ export class MainPage extends React.Component {
                      hazardFilter={this.state.hazardFilter} />)
                }
             </InfiniteScroll>
-            <StyledFooter>
+            <Footer>
                2021 © Все права и планета защищены
-            </StyledFooter>
+            </Footer>
          </>
       )
    }
