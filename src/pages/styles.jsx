@@ -1,17 +1,17 @@
-import styled from "styled-components";
-import asteroidImg from '../images/asteroidImg.svg';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import asteroidImg from '../images/asteroidImg.svg';
 
 export const SectionWrapper = styled.header`
 display: flex;
 justify-content: space-between;
-margin-bottom: ${props => props.marginBottom};
+margin-bottom: ${(props) => props.marginBottom};
 border-bottom: ${({ border }) => border || 'none'};
 @media ${({ theme }) => theme.media.phone} {
    flex-direction: column;
    margin-bottom: 10px;
    }
-`
+`;
 
 export const Title = styled.h1`
 font-size: 36px;
@@ -21,7 +21,7 @@ margin-bottom: 8px;
 @media ${({ theme }) => theme.media.phone} {
    font-size: 24px;
    }
-`
+`;
 
 export const Sorting = styled.div`
 padding-top: ${({ paddingTop }) => paddingTop || '0px'};
@@ -30,7 +30,7 @@ margin-bottom: ${({ margin }) => margin || '18px'};
 width: 74%;
 padding-top: 0px;
    }
-`
+`;
 
 export const SubTitle = styled.div`
 margin-bottom: 24px;
@@ -39,19 +39,19 @@ width: 414px;
 margin-bottom: 19px;
 width: 100%;
    }
-`
+`;
 
 export const SortingWarning = styled(Link)`
 margin-left: ${({ margin }) => margin || '0px'};
 text-decoration: ${({ underline }) => underline || 'none'};
 color: black;
 font-weight: ${({ weight }) => weight || 'normal'};
-`
+`;
 
 export const AsteroidNameTitle = styled.span`
 margin-right: 24px;
 font-weight: bold;
-`
+`;
 
 export const Asteroid = styled.div`
 width: 100%;
@@ -87,7 +87,7 @@ padding: 0px 16px 16px 16px;
    display: flex;
    flex-direction: column-reverse;
    }
-`
+`;
 
 export const AsteroidName = styled(Link)`
 position: relative;
@@ -107,7 +107,4 @@ color: black;
 @media ${({ theme }) => theme.media.phone} {
 margin-bottom: ${({ marginBottom }) => marginBottom || '48px'};
    }
-`
-
-
-
+`;

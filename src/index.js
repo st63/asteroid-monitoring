@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { store } from './redux/store';
-import { Provider } from "react-redux";
 
 const Global = createGlobalStyle`
   * {
@@ -16,13 +16,13 @@ const Global = createGlobalStyle`
     background-color: white;
     font-family: Arial, Helvetica, sans-serif;
   }
-`
+`;
 
 const theme = {
   media: {
     phone: '(max-width: 900px)',
-  }
-}
+  },
+};
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
@@ -31,7 +31,7 @@ ReactDOM.render(
       <App />
     </Provider>
   </ThemeProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 reportWebVitals();

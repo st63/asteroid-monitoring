@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
 display: flex;
 justify-content: center;
-`
+`;
 
 export const StyledMainPage = styled.div`
 width: 952px;
@@ -13,7 +13,7 @@ padding: 37px 16px 46px 16px;
    width: 100%;
    padding-top: 8px;
    }
-`
+`;
 
 export const Button = styled.button`
 color: white;
@@ -28,4 +28,4 @@ display: ${({ buttonShow }) => buttonShow || 'inline'};
 &:hover {
    cursor: pointer;
 }
-`
+`;

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const TiranozavrImg = styled.img`
 position: absolute;
@@ -12,7 +12,7 @@ left: initial;
 right: 2px;
 top: 113px;
    }
-`
+`;
 
 export const AsteroidInfo = styled.div`
 background: transparent;
@@ -29,24 +29,24 @@ padding-right: ${({ padding }) => padding || '0px'};
    margin-top: 0px;
    width: 100%;
    }
-`
+`;
 
 export const AsteroidParam = styled.div`
 background: transparent;
 display: flex;
 justify-content: space-between;
 margin-bottom: 10px;
-`
+`;
 
 export const AsteroidEstimation = styled.span`
 background: transparent;
 display: block;
 font-weight: ${({ weight }) => weight || 'normal'};
-`
+`;
 
 export const Span = styled.span`
 background: transparent;
-`
+`;
 
 export const Dotted = styled.span`
 background: transparent;
@@ -54,5 +54,4 @@ border-bottom: 1px dotted black;
 display: flex;
 flex-grow: 1;
 height: 18px;
-`
-
+`;

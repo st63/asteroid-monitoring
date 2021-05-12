@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import MainPage from './pages/MainPage/index';
 import ForDestruction from './pages/ForDestruction/index';
 import AsteroidDetail from './pages/AsteroidDetail/index';
@@ -9,13 +9,13 @@ function App(props) {
   return (
     <StyledContainer>
       <StyledMainPage props={props}>
-        <BrowserRouter>
+        <HashRouter>
           <Switch>
-            <Route path='/asteroid-detail/:id' component={AsteroidDetail} />
-            <Route path='/for-destruction' component={ForDestruction} />
-            <Route path='/' component={MainPage} />
+            <Route path="/asteroid-detail/:id" component={AsteroidDetail} />
+            <Route path="/for-destruction" component={ForDestruction} />
+            <Route path="/" component={MainPage} />
           </Switch>
-        </BrowserRouter>
+        </HashRouter>
       </StyledMainPage>
     </StyledContainer>
   );
