@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.js": "/asteroid-monitoring/static/js/main.b3242754.chunk.js",
+    "main.js.map": "/asteroid-monitoring/static/js/main.b3242754.chunk.js.map",
+    "runtime-main.js": "/asteroid-monitoring/static/js/runtime-main.680a4cab.js",
+    "runtime-main.js.map": "/asteroid-monitoring/static/js/runtime-main.680a4cab.js.map",
+    "static/js/2.57e15550.chunk.js": "/asteroid-monitoring/static/js/2.57e15550.chunk.js",
+    "static/js/2.57e15550.chunk.js.map": "/asteroid-monitoring/static/js/2.57e15550.chunk.js.map",
+    "static/js/3.e9ffff3b.chunk.js": "/asteroid-monitoring/static/js/3.e9ffff3b.chunk.js",
+    "static/js/3.e9ffff3b.chunk.js.map": "/asteroid-monitoring/static/js/3.e9ffff3b.chunk.js.map",
+    "index.html": "/asteroid-monitoring/index.html",
+    "static/js/2.57e15550.chunk.js.LICENSE.txt": "/asteroid-monitoring/static/js/2.57e15550.chunk.js.LICENSE.txt",
+    "static/media/asteroidImg.3b436c0d.svg": "/asteroid-monitoring/static/media/asteroidImg.3b436c0d.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.680a4cab.js",
+    "static/js/2.57e15550.chunk.js",
+    "static/js/main.b3242754.chunk.js"
+  ]
+}
