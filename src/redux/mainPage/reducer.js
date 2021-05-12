@@ -6,8 +6,7 @@ const defaultState = {
   onlyDangerousAsteroids: [],
 };
 
-export function mainPageReducer(state, action) {
-  state = state || defaultState;
+export function mainPageReducer(state = defaultState, action) {
   switch (action.type) {
     case GET_ASTEROIDS: {
       state = {

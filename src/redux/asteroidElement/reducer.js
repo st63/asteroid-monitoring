@@ -4,8 +4,7 @@ const defaultState = {
   asteroidsToDestroy: [],
 };
 
-export function asteroidElementReducer(state, action) {
-  state = state || defaultState;
+export function asteroidElementReducer(state = defaultState, action) {
   switch (action.type) {
     case GET_ASTEROIDS_TO_DESTROY: {
       state = {

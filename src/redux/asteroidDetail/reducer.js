@@ -4,8 +4,7 @@ const defaultState = {
   allApproachData: [],
 };
 
-export function asteroidDetailReduser(state, action) {
-  state = state || defaultState;
+export function asteroidDetailReduser(state = defaultState, action) {
   switch (action.type) {
     case GET_ASTEROIDS_DETAIL: {
       state = {

@@ -6,55 +6,54 @@ import {
 } from '../styles';
 import { Button } from '../../styles';
 
-class ForDestruction extends React.Component {
-  render() {
-    let buttonShow = 'inline';
-    let emptyCart;
+const ForDestruction = (props) => {
+  const { asteroidsToDestroy } = props;
+  let buttonShow = 'inline';
+  let emptyCart;
 
-    if (this.props.asteroidsToDestroy.length === 0) {
-      buttonShow = 'none';
-      emptyCart = 'Корзина уничтожения пока пуста';
-    }
-
-    const asteroidsToDestroy = this.props.asteroidsToDestroy.map((asteroid) => (
-      <AsteroidElement
-        marginBottom="70px"
-        buttonShow="none"
-        padding="25px"
-        key={asteroid.id}
-        {...asteroid}
-      />
-    ));
-
-    return (
-      <>
-        <SectionWrapper props={this.props} marginBottom="26px" border="1px solid black">
-          <div>
-            <Title props={this.props}>
-              ARMAGGEDON V
-            </Title>
-            <SubTitle>
-              Здесь вы можете отправить Брюса Уилиса и его команду на уничтожение астероидов
-            </SubTitle>
-          </div>
-          <Sorting props={this.props} paddingTop="14px">
-            <AsteroidNameTitle>
-              Корзина уничтожения
-            </AsteroidNameTitle>
-            <SortingWarning to="/" underline="underline">
-              Все астероиды
-            </SortingWarning>
-          </Sorting>
-        </SectionWrapper>
-        {emptyCart}
-        {asteroidsToDestroy}
-        <Button marginBottom="30px" buttonShow={buttonShow}>
-          Вызов Брюса Уилиса
-        </Button>
-      </>
-    );
+  if (asteroidsToDestroy.length === 0) {
+    buttonShow = 'none';
+    emptyCart = 'Корзина уничтожения пока пуста';
   }
-}
+
+  const asteroidsToDestroyLocal = asteroidsToDestroy.map((asteroid) => (
+    <AsteroidElement
+      marginBottom="70px"
+      buttonShow="none"
+      padding="25px"
+      key={asteroid.id}
+      {...asteroid}
+    />
+  ));
+
+  return (
+    <>
+      <SectionWrapper props={props} marginBottom="26px" border="1px solid black">
+        <div>
+          <Title props={props}>
+            ARMAGGEDON V
+          </Title>
+          <SubTitle>
+            Здесь вы можете отправить Брюса Уилиса и его команду на уничтожение астероидов
+          </SubTitle>
+        </div>
+        <Sorting props={props} paddingTop="14px">
+          <AsteroidNameTitle>
+            Корзина уничтожения
+          </AsteroidNameTitle>
+          <SortingWarning to="/" underline="underline">
+            Все астероиды
+          </SortingWarning>
+        </Sorting>
+      </SectionWrapper>
+      {emptyCart}
+      {asteroidsToDestroyLocal}
+      <Button marginBottom="30px" buttonShow={buttonShow}>
+        Вызов Брюса Уилиса
+      </Button>
+    </>
+  );
+};
 
 const mapStateToProps = (state) => ({
   asteroidsToDestroy: state.asteroidElement.asteroidsToDestroy,

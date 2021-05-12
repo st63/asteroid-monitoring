@@ -48,9 +48,7 @@ export class NearEarthApproach extends React.Component {
 
     const distance = `${Math.round(miss_distance.kilometers).toLocaleString('ru-RU')} км`;
 
-    let timeForm;
-
-    (epoch_date_close_approach <= new Date().getTime()) ? timeForm = 'летел' : timeForm = 'будет лететь';
+    const timeForm = (epoch_date_close_approach <= new Date().getTime()) ? 'летел' : 'будет лететь';
 
     return (
       <>
