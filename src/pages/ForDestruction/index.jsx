@@ -5,14 +5,25 @@ import { SectionWrapper, Title, Sorting, SubTitle, SortingWarning, AsteroidNameT
 import { Button } from '../../styles';
 
 class ForDestruction extends React.Component {
+
    render() {
+
       let buttonShow = 'inline';
       let emptyCart;
+
       if (this.props.asteroidsToDestroy.length === 0) {
+
          buttonShow = 'none';
          emptyCart = 'Корзина уничтожения пока пуста';
       }
-      const asteroidsToDestroy = this.props.asteroidsToDestroy.map(asteroid => <AsteroidElement marginBottom={'70px'} buttonShow={'none'} padding={'25px'} key={asteroid.id} {...asteroid} />)
+
+      const asteroidsToDestroy = this.props.asteroidsToDestroy.map(asteroid => <AsteroidElement
+         marginBottom={'70px'}
+         buttonShow={'none'}
+         padding={'25px'}
+         key={asteroid.id}
+         {...asteroid} />)
+
       return (
          <React.Fragment>
             <SectionWrapper props={this.props} marginBottom={'26px'} border={'1px solid black'}>
@@ -44,8 +55,9 @@ class ForDestruction extends React.Component {
 }
 
 let mapStateToProps = (state) => {
+
    return {
-      asteroidsToDestroy: state.asteroidsToDestroyPage.asteroidsToDestroy,
+      asteroidsToDestroy: state.asteroidElement.asteroidsToDestroy,
    };
 };
 

@@ -1,33 +1,35 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import { connect } from "react-redux";
+import { compose } from "redux";
 import { NearEarthApproach } from '../../components/NearEarthApproach';
 import AsteroidElement from '../../components/AsteroidElement';
 import { SectionWrapper, Title, Sorting, SubTitle, SortingWarning, AsteroidNameTitle } from '../styles';
+import { getAsteroidsDetailAC } from '../../redux/asteroidDetail/actions';
 
 class AsteroidDetail extends React.Component {
-   state = {
-      allApproachData: [],
-   }
-
+   
    componentDidMount() {
+
       this.getAsteroidsDetail();
    }
 
    getAsteroidsDetail = async () => {
+
       const id = this.props.match.params.id;
-      let response = await fetch(`https://api.nasa.gov/neo/rest/v1/neo/${id}?api_key=DEMO_KEY`);
-      let data = await response.json();
-      this.setState({
-         allApproachData: data.close_approach_data,
-      })
+
+      this.props.getAsteroidsDetailAC(id)
    }
 
    render() {
-      if (this.state.allApproachData.length === 0) {
+
+      const { allApproachData } = this.props;
+
+      if (allApproachData.length === 0) {
          return null;
       }
 
-      const allApproach = this.state.allApproachData.map(approach => <NearEarthApproach {...approach} />)
+      const allApproach = allApproachData.map(approach => <NearEarthApproach key={approach.epoch_date_close_approach} {...approach} />)
 
       return (
          <React.Fragment>
@@ -59,4 +61,11 @@ class AsteroidDetail extends React.Component {
    }
 }
 
-export const AsteroidDetailWrap = withRouter(AsteroidDetail);
+let mapStateToProps = (state) => {
+
+   return {
+      allApproachData: state.asteroidDetail.allApproachData,
+   };
+};
+
+export default compose(connect(mapStateToProps, { getAsteroidsDetailAC }), withRouter)(AsteroidDetail);

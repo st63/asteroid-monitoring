@@ -3,12 +3,13 @@ import AsteroidElement from '../../components/AsteroidElement';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SectionWrapper, Title, Sorting, SubTitle, SortingWarning } from '../styles';
 import { SortingCheckbox, Input, Footer, SortingDistanceKm, SortingDistanceMoon } from './styles';
+import { getAsteroidsAC, loadMoreAC } from '../../redux/mainPage/actions';
+import { connect } from "react-redux";
+import { DateTime } from "luxon";
 
-export class MainPage extends React.Component {
+class MainPage extends React.Component {
+
    state = {
-      allAsteroids: [],
-      asteroidsToDisplay: [],
-      onlyDangerousAsteroids: [],
       distanceInKilometers: true,
       distanceIndistanceToTheMoon: false,
       hazardFilter: false,
@@ -16,65 +17,14 @@ export class MainPage extends React.Component {
    }
 
    componentDidMount() {
-      this.getAllAsteroids();
-   }
 
-   getAllAsteroids = async () => {
-      const year = new Date().getFullYear();
-      const month = new Date().getMonth() + 1;
-      const day = new Date().getDate();
-      const currentDate = `${year}-${month}-${day}`;
-
-      try {
-         let response = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${currentDate}&api_key=DEMO_KEY`);
-         let data = await response.json();
-         let allAsteroidsObject = data.near_earth_objects;
-         const allAsteroidsCountKeys = Object.keys(allAsteroidsObject);
-         let allAsteroidsArray = [];
-         let onlyDangerousAsteroids = [];
-
-         for (let i = 0; i < allAsteroidsCountKeys.length; i++) {
-            let nextDay = new Date();
-            nextDay.setDate(nextDay.getDate() + i);
-            const year = nextDay.getFullYear();
-            let month = nextDay.getMonth() + 1;
-            let day = nextDay.getDate();
-
-            if (month < 10) {
-               month = `0${month}`
-            }
-
-            if (day < 10) {
-               day = `0${day}`
-            }
-
-            allAsteroidsObject[`${year}-${month}-${day}`].map(asteroid => {
-
-               allAsteroidsArray.push(asteroid)
-
-               if (asteroid.is_potentially_hazardous_asteroid) {
-                  onlyDangerousAsteroids.push(asteroid)
-               }
-
-            })
-         }
-
-         let asteroidsToDisplay = [];
-         for (let i = 0; i < 5; i++) {
-            asteroidsToDisplay.push(allAsteroidsArray[i])
-         }
-
-         this.setState({
-            allAsteroids: allAsteroidsArray,
-            asteroidsToDisplay: asteroidsToDisplay,
-            onlyDangerousAsteroids,
-         })
-      } catch (err) {
-         alert('Извините, сервер не справляется, очень много запросов');
-      }
+      let currentDate = DateTime.now().toISODate();
+      
+      this.props.getAsteroidsAC(currentDate);
    }
 
    changeDistanceSorting = (value) => {
+
       this.setState({
          distanceInKilometers: value,
          distanceIndistanceToTheMoon: !value,
@@ -82,53 +32,70 @@ export class MainPage extends React.Component {
    }
 
    toggleHazardFilter = () => {
+
       this.setState((state) => {
          return { hazardFilter: !state.hazardFilter }
       })
    }
 
    loadMore = () => {
+
       let newArray = [];
-      for (let i = this.state.asteroidsToDisplay.length; i < this.state.asteroidsToDisplay.length + 4; i++) {
-         if (i < this.state.allAsteroids.length) {
-            newArray.push(this.state.allAsteroids[i])
+
+      for (let i = this.props.asteroidsToDisplay.length; i < this.props.asteroidsToDisplay.length + 4; i++) {
+         if (i < this.props.allAsteroids.length) {
+            newArray.push(this.props.allAsteroids[i])
          }
       }
-      this.setState({
-         asteroidsToDisplay: [...this.state.asteroidsToDisplay, ...newArray]
-      })
+
+      this.props.loadMoreAC(newArray)
    }
 
    render() {
-      if (this.state.allAsteroids.length === 0) {
+
+      const { allAsteroids, asteroidsToDisplay, onlyDangerousAsteroids } = this.props;
+      const { distanceInKilometers, hazardFilter, hasMore } = this.state;
+
+      if (allAsteroids.length === 0) {
          return null;
       }
-      let lengthArray = this.state.allAsteroids.length;
+
+      let lengthArray = allAsteroids.length;
       let maxAsteroid = 0;
       let minAsteroid = 10000;
+
       for (let i = 0; i < lengthArray; i++) {
-         if (maxAsteroid < this.state.allAsteroids[i].estimated_diameter.meters.estimated_diameter_max) {
-            maxAsteroid = this.state.allAsteroids[i].estimated_diameter.meters.estimated_diameter_max
+
+         if (maxAsteroid < allAsteroids[i].estimated_diameter.meters.estimated_diameter_max) {
+
+            maxAsteroid = allAsteroids[i].estimated_diameter.meters.estimated_diameter_max
          }
-         if (minAsteroid > this.state.allAsteroids[i].estimated_diameter.meters.estimated_diameter_max) {
-            minAsteroid = this.state.allAsteroids[i].estimated_diameter.meters.estimated_diameter_max
+
+         if (minAsteroid > allAsteroids[i].estimated_diameter.meters.estimated_diameter_max) {
+
+            minAsteroid = allAsteroids[i].estimated_diameter.meters.estimated_diameter_max
          }
       }
+
       let stepMeters = (maxAsteroid - minAsteroid) / 100;
+
       let weightDistanceKm, weightDistanceMoon, underlineDistanceKm, underlineDistanceMoon;
-      if (this.state.distanceInKilometers) {
+
+      if (distanceInKilometers) {
+
          weightDistanceKm = 'bold';
          weightDistanceMoon = 'normal';
          underlineDistanceKm = 'none';
          underlineDistanceMoon = 'underline';
       } else {
+
          weightDistanceKm = 'normal';
          weightDistanceMoon = 'bold';
          underlineDistanceKm = 'underline';
          underlineDistanceMoon = 'none';
       }
 
-      let currentArray = !this.state.hazardFilter ? this.state.asteroidsToDisplay : this.state.onlyDangerousAsteroids;
+      let currentArray = !hazardFilter ? asteroidsToDisplay : onlyDangerousAsteroids;
 
       return (
          <>
@@ -158,13 +125,23 @@ export class MainPage extends React.Component {
                   </span>
                </SortingCheckbox>
                <Sorting margin={'6px'}>
-                  Расстояние <SortingDistanceKm weightDistanceKm={weightDistanceKm} underlineDistanceKm={underlineDistanceKm} onClick={() => this.changeDistanceSorting(true)}>в километрах</SortingDistanceKm>, <SortingDistanceMoon weightDistanceMoon={weightDistanceMoon} underlineDistanceMoon={underlineDistanceMoon} onClick={() => this.changeDistanceSorting(false)}>в дистанциях до луны</SortingDistanceMoon>
+                  Расстояние
+                  <SortingDistanceKm
+                     weightDistanceKm={weightDistanceKm}
+                     underlineDistanceKm={underlineDistanceKm}
+                     onClick={() => this.changeDistanceSorting(true)}
+                  >в километрах</SortingDistanceKm>,
+                  <SortingDistanceMoon
+                     weightDistanceMoon={weightDistanceMoon}
+                     underlineDistanceMoon={underlineDistanceMoon}
+                     onClick={() => this.changeDistanceSorting(false)}
+                  >в дистанциях до луны</SortingDistanceMoon>
                </Sorting>
             </SectionWrapper>
             <InfiniteScroll
-               dataLength={this.state.asteroidsToDisplay.length}
+               dataLength={asteroidsToDisplay.length}
                next={this.loadMore}
-               hasMore={this.state.hasMore}
+               hasMore={hasMore}
             >
                {
                   currentArray.map(asteroid => <AsteroidElement
@@ -172,8 +149,7 @@ export class MainPage extends React.Component {
                      {...asteroid}
                      minAsteroid={minAsteroid}
                      stepMeters={stepMeters}
-                     distanceInKilometers={this.state.distanceInKilometers}
-                     hazardFilter={this.state.hazardFilter} />)
+                     distanceInKilometers={distanceInKilometers} />)
                }
             </InfiniteScroll>
             <Footer>
@@ -183,3 +159,14 @@ export class MainPage extends React.Component {
       )
    }
 }
+
+let mapStateToProps = (state) => {
+
+   return {
+      allAsteroids: state.mainPage.allAsteroids,
+      asteroidsToDisplay: state.mainPage.asteroidsToDisplay,
+      onlyDangerousAsteroids: state.mainPage.onlyDangerousAsteroids,
+   };
+};
+
+export default connect(mapStateToProps, { getAsteroidsAC, loadMoreAC })(MainPage);

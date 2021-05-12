@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { store } from './redux/redusers';
+import { store } from './redux/store';
 import { Provider } from "react-redux";
 
 const Global = createGlobalStyle`
